@@ -1,7 +1,22 @@
 # filebed
 file bed
 
-![image](http://github.com/istommao/filebed/raw/master/sources/screen01.jpg)
+![image](./sources/screen01.png)
 
+![image](./sources/screen02.png)
 
-![image](http://github.com/istommao/filebed/raw/master/sources/screen01.jpg)
+## Stack
+
+- Sanic
+- WebUploader
+
+## Install
+
+```shell
+git clone https://github.com/istommao/filebed.git
+
+pip install sanic xxhash_cffi
+
+python main.py
+``
+
