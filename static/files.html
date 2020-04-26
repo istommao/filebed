@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Filebed</title>
+    <link rel="stylesheet" type="text/css" href="/static/webuploader.css" />
+    <link rel="stylesheet" type="text/css" href="/static/style.css" />
+    <link rel="stylesheet" href="https://www.layuicdn.com/layui/css/layui.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/static/layui-theme.css" />
+    <style type="text/css">
+    .layui-table-cell {
+        height: auto;
+        line-height: auto;
+    }
+    </style>
+</head>
+
+<body>
+    <ul class="layui-nav" lay-filter="">
+        <li class="layui-nav-item"><a href="/">上传</a></li>
+        <li class="layui-nav-item layui-this"><a href="/files/">文件列表</a></li>
+        <li class="layui-nav-item"><a href="https://github.com/istommao/filebed" target="_blank">GitHub</a></li>
+    </ul>
+    <div id="wrapper">
+        <div style="margin: 2em">
+            <table class="layui-hide" id="files"></table>
+        </div>
+    </div>
+    <script src="https://www.layuicdn.com/layui/layui.js" charset="utf-8"></script>
+    <script>
+    layui.use('table', function() {
+        var table = layui.table;
+
+        table.render({
+            elem: '#files',
+            url: '/api/files/',
+            cellMinWidth: 120,
+            cols: [
+                [{
+                        field: 'file',
+                        width: '200',
+                        height: '300',
+                        title: 'File',
+                        templet: function(d) {
+                            return '<img src="' + d.file + '"/>'
+                        }
+                    },
+                    { field: 'type', width: 100, title: '类型' },
+                    { field: 'url', width: 500, title: 'URL' },
+                    { field: 'create_at', width: 137, title: '创建时间', sort: true }
+                ]
+            ]
+        });
+    });
+    </script>
+</body>
+
+</html>
