@@ -15,8 +15,11 @@ file bed
 ```shell
 git clone https://github.com/istommao/filebed.git
 
-pip install sanic xxhash_cffi
+pip install -r requirements.txt
 
 python main.py
-``
+```
 
+## Docker
+
+TODO
