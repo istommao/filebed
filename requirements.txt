@@ -1,2 +1,3 @@
 sanic
 xxhash_cffi
+motor

@@ -9,9 +9,24 @@
     <link rel="stylesheet" href="https://www.layuicdn.com/layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="/static/layui-theme.css" />
     <style type="text/css">
-    .layui-table-cell {
+    td .layui-table-cell {
         height: auto;
-        line-height: auto;
+        line-height: 100px;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    audio {
+        position: relative;
+        top: 15px;
+    }
+
+    video {
+        position: relative;
+        top: 15px;
+        margin: 0;
+        padding: 0;
     }
     </style>
 </head>
@@ -35,18 +50,25 @@
         table.render({
             elem: '#files',
             url: '/api/files/',
-            cellMinWidth: 120,
+            cellMinWidth: 100,
             cols: [
                 [{
                         field: 'file',
-                        width: '200',
-                        height: '300',
+                        width: '350',
                         title: 'File',
                         templet: function(d) {
-                            return '<img src="' + d.file + '"/>'
+                            if (d.type == 'image') {
+                                return '<img src="' + d.file + '"/>'
+                            } else if (d.type == 'video') {
+                                return '<video src="' + d.url + '" controls="controls" width="280" height="150"> 您的浏览器不支持 video 标签</video>'
+                            } else if (d.type == 'audio') {
+                                return '<audio src="' + d.url + '" controls="controls"> 您的浏览器不支持 audio标签 </audio>'
+                            }
                         }
                     },
+                    { field: 'name', width: 250, title: '名称' },
                     { field: 'type', width: 100, title: '类型' },
+                    { field: 'size', width: 150, title: '大小' },
                     { field: 'url', width: 500, title: 'URL' },
                     { field: 'create_at', width: 137, title: '创建时间', sort: true }
                 ]
