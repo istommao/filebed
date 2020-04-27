@@ -28,6 +28,9 @@
         margin: 0;
         padding: 0;
     }
+    .imgCell {
+        max-height: 200px;
+    }
     </style>
 </head>
 
@@ -44,6 +47,17 @@
     </div>
     <script src="https://www.layuicdn.com/layui/layui.js" charset="utf-8"></script>
     <script>
+    function readableBytes(bytes) {
+        if (bytes == 0) {
+            return '-'
+        }
+
+        var i = Math.floor(Math.log(bytes) / Math.log(1024)),
+            sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+        return (bytes / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + sizes[i];
+    }
+
     layui.use('table', function() {
         var table = layui.table;
 
@@ -58,7 +72,7 @@
                         title: 'File',
                         templet: function(d) {
                             if (d.type == 'image') {
-                                return '<img src="' + d.file + '"/>'
+                                return '<img src="' + d.file + '" class="imgCell"/>'
                             } else if (d.type == 'video') {
                                 return '<video src="' + d.url + '" controls="controls" width="280" height="150"> 您的浏览器不支持 video 标签</video>'
                             } else if (d.type == 'audio') {
@@ -68,7 +82,11 @@
                     },
                     { field: 'name', width: 250, title: '名称' },
                     { field: 'type', width: 100, title: '类型' },
-                    { field: 'size', width: 150, title: '大小' },
+                    { field: 'size', width: 150, title: '大小' ,
+                        templet: function(d) {
+                            return readableBytes(d.size || 0)
+                        }
+                    },
                     { field: 'url', width: 500, title: 'URL' },
                     { field: 'create_at', width: 137, title: '创建时间', sort: true }
                 ]

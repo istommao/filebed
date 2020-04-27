@@ -48,7 +48,7 @@ async def files_page(request):
 
 
 @App.route('/api/files/')
-async def files_page(request):
+async def files_api(request):
     qs = await File.find(
         {}, sort='create_at desc'
     )
@@ -58,8 +58,9 @@ async def files_page(request):
         item = {
             'file': BASE_URL + '/' + obj['path'],
             'url':  BASE_URL + '/' + obj['path'],
-            'type':obj['type'],
-            'name':obj['name'],
+            'type': obj['type'],
+            'name': obj['name'],
+            'size': obj['size'],
             'create_at': obj['create_at']
         }
         datalist.append(item)
@@ -79,6 +80,7 @@ async def upload_api(request):
     upload_file = request.files.get('file')
     name = request.form.get('name')
     ftype = request.form.get('type')
+    file_size = request.form.get('size')
 
     folder_path = '{}/{}'.format(
         BASE_UPLOAD_FOLDER,
@@ -97,6 +99,7 @@ async def upload_api(request):
 
     result = await File.insert_one({
         'name': name,
+        'size': file_size,
         'type': file_type,
         'path': file_path,
         'create_at': await get_unix_time(),

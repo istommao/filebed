@@ -8,6 +8,7 @@ file bed
 ## Stack
 
 - Sanic
+- motor
 - WebUploader
 
 ## Install
