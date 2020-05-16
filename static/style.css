@@ -1,10 +1,83 @@
 /* ----------------Reset Css--------------------- */
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary,
-time, mark, audio, video, input  {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video,
+input {
     margin: 0;
     padding: 0;
     border: none;
@@ -14,11 +87,32 @@ time, mark, audio, video, input  {
     vertical-align: baseline;
 }
 
-html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6 {
+html,
+body,
+form,
+fieldset,
+p,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     -webkit-text-size-adjust: none;
 }
 
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
     display: block;
 }
 
@@ -26,15 +120,20 @@ body {
     font-family: arial, sans-serif;
 }
 
-ol, ul {
+ol,
+ul {
     list-style: none;
 }
 
-blockquote, q {
+blockquote,
+q {
     quotes: none;
 }
 
-blockquote:before, blockquote:after, q:before, q:after {
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
     content: '';
     content: none;
 }
@@ -79,8 +178,9 @@ table {
 
 .element-invisible {
     position: absolute !important;
-    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-    clip: rect(1px,1px,1px,1px);
+    clip: rect(1px 1px 1px 1px);
+    /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
 }
 
 #uploader .placeholder {
@@ -96,7 +196,8 @@ table {
 
 #uploader .placeholder .webuploader-pick {
     font-size: 18px;
-    background: #00b7ee;
+    /*background: #00b7ee;*/
+    background: #00c3ff;
     border-radius: 3px;
     line-height: 44px;
     padding: 0 30px;
@@ -108,7 +209,7 @@ table {
 }
 
 #uploader .placeholder .webuploader-pick-hover {
-    background: #00a2d4;
+    background: #20A0FF;
 }
 
 #uploader .placeholder .flashTip {
@@ -119,10 +220,12 @@ table {
     text-align: center;
     bottom: 20px;
 }
+
 #uploader .placeholder .flashTip a {
     color: #0785d1;
     text-decoration: none;
 }
+
 #uploader .placeholder .flashTip a:hover {
     text-decoration: underline;
 }
@@ -179,7 +282,7 @@ table {
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow : ellipsis;
+    text-overflow: ellipsis;
     top: 5px;
     text-indent: 5px;
     text-align: left;
@@ -194,6 +297,7 @@ table {
     overflow: hidden;
     z-index: 50;
 }
+
 #uploader .filelist li p.progress span {
     display: none;
     overflow: hidden;
@@ -218,26 +322,31 @@ table {
 
 @-webkit-keyframes progressmove {
     0% {
-       background-position: 0 0;
+        background-position: 0 0;
     }
+
     100% {
-       background-position: 17px 0;
+        background-position: 17px 0;
     }
 }
+
 @-moz-keyframes progressmove {
     0% {
-       background-position: 0 0;
+        background-position: 0 0;
     }
+
     100% {
-       background-position: 17px 0;
+        background-position: 17px 0;
     }
 }
+
 @keyframes progressmove {
     0% {
-       background-position: 0 0;
+        background-position: 0 0;
     }
+
     100% {
-       background-position: 17px 0;
+        background-position: 17px 0;
     }
 }
 
@@ -293,8 +402,8 @@ table {
 #uploader .filelist div.file-panel {
     position: absolute;
     height: 0;
-    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#80000000', endColorstr='#80000000')\0;
-    background: rgba( 0, 0, 0, 0.5 );
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#80000000', endColorstr='#80000000')\0;
+    background: rgba(0, 0, 0, 0.5);
     width: 100%;
     top: 0;
     left: 0;
@@ -317,6 +426,7 @@ table {
 #uploader .filelist div.file-panel span.rotateLeft {
     background-position: 0 -24px;
 }
+
 #uploader .filelist div.file-panel span.rotateLeft:hover {
     background-position: 0 0;
 }
@@ -324,6 +434,7 @@ table {
 #uploader .filelist div.file-panel span.rotateRight {
     background-position: -24px -24px;
 }
+
 #uploader .filelist div.file-panel span.rotateRight:hover {
     background-position: -24px 0;
 }
@@ -331,6 +442,7 @@ table {
 #uploader .filelist div.file-panel span.cancel {
     background-position: -48px -24px;
 }
+
 #uploader .filelist div.file-panel span.cancel:hover {
     background-position: -48px 0;
 }
@@ -357,6 +469,7 @@ table {
     position: relative;
     margin-right: 10px;
 }
+
 #uploader .statusBar .progress span.percentage {
     width: 0;
     height: 100%;
@@ -365,6 +478,7 @@ table {
     background: #1483d8;
     position: absolute;
 }
+
 #uploader .statusBar .progress span.text {
     position: relative;
     z-index: 10;
@@ -403,6 +517,7 @@ table {
     font-size: 14px;
     float: left;
 }
+
 #uploader .statusBar .btns .webuploader-pick-hover,
 #uploader .statusBar .btns .uploadBtn:hover,
 #uploader .statusBar .btns .uploadBtn.state-uploading:hover,
@@ -415,6 +530,7 @@ table {
     color: #fff;
     border-color: transparent;
 }
+
 #uploader .statusBar .btns .uploadBtn:hover {
     background: #00a2d4;
 }
@@ -422,4 +538,20 @@ table {
 #uploader .statusBar .btns .uploadBtn.disabled {
     pointer-events: none;
     opacity: 0.6;
+}
+
+.layui-nav {
+    background: #20A0FF;
+    /*border-bottom: 1px solid #0077ff;*/
+}
+
+.layui-this {
+    background: hsla(0, 0%, 100%, .1);
+}
+
+.layui-nav .layui-this:after,
+.layui-nav-bar,
+.layui-nav-tree .layui-nav-itemed:after {
+    background-color: #fff !important;
+
 }

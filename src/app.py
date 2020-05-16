@@ -39,12 +39,12 @@ BASE_UPLOAD_FOLDER = 'upload'
 
 @App.route('/')
 async def index_page(request):
-    return await file_stream('static/index.html')
+    return await file_stream('static/html/index.html')
 
 
 @App.route('/files/')
 async def files_page(request):
-    return await file_stream('static/files.html')
+    return await file_stream('static/html/files.html')
 
 
 @App.route('/api/files/')
