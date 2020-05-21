@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://www.layuicdn.com/layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="/static/layui-theme.css" />
     <link rel="stylesheet" type="text/css" href="/static/style.css" />
+
     <style type="text/css">
     td .layui-table-cell {
         height: auto;
@@ -74,7 +75,7 @@
                             if (d.type == 'image') {
                                 return '<img src="' + d.file + '" class="imgCell"/>'
                             } else if (d.type == 'video') {
-                                return '<video src="' + d.url + '" controls="controls" width="280" height="150"> 您的浏览器不支持 video 标签</video>'
+                                return '<video class="video-js" src="' + d.url + '" controls="controls" width="280" height="150"> 您的浏览器不支持 video 标签</video>'
                             } else if (d.type == 'audio') {
                                 return '<audio src="' + d.url + '" controls="controls"> 您的浏览器不支持 audio标签 </audio>'
                             }

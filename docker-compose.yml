@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  mongo-container:
+    image: mongo:4.2
+    container_name: mongodb
+    environment:
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=123456
+    ports:
+      - '27017:27017'
+    volumes:
+      - './_data/mongo:/data/db'
+      - './_data/mongo-entrypoint/:/docker-entrypoint-initdb.d/'
+    command: mongod
+
+  filebed:
+    image: filebed:v0.1
+    container_name: filebed
+    ports:
+      - '8100:8100'
+    volumes:
+      - './_data/upload/:/var/www/upload'
