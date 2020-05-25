@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Filebed</title>
+    <link rel="stylesheet" type="text/css" href="/static/webuploader.css" />
+    <link rel="stylesheet" href="https://www.layuicdn.com/layui/css/layui.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/static/layui-theme.css" />
+    <link rel="stylesheet" type="text/css" href="/static/style.css" />
+
+    <style type="text/css">
+    .CardBox {
+        margin: 1em auto;
+        box-shadow: 0 2px 3px 0 rgba(7, 17, 27, 0.1);
+        transition: .3s all linear;
+        border: 1px solid #e4ecf3;
+        padding: 0.5em;
+        border-radius: 4px;
+        background-color: #fff;
+        height: 18em;
+        width: 85%;
+    }
+    .CardBody {
+        font-size: 14px;
+    }
+    </style>
+</head>
+
+<body>
+    <ul class="layui-nav" lay-filter="">
+        <li class="layui-nav-item"><a href="/">上传</a></li>
+        <li class="layui-nav-item"><a href="/files/">文件列表</a></li>
+        <li class="layui-nav-item layui-this"><a href="/cards/">卡片列表</a></li>
+        <li class="layui-nav-item"><a href="https://github.com/istommao/filebed" target="_blank">GitHub</a></li>
+    </ul>
+
+    <div class="layui-row">
+        <div class="layui-col-md3">
+            <div class="CardBox">
+                <img src="/static/fileicons/html.png" alt="" width="32" height="32">
+                <img src="/static/fileicons/excel.png" alt="" width="32" height="32">
+                <img src="/static/fileicons/word.png" alt="" width="32" height="32">
+                <img src="/static/fileicons/ppt.png" alt="" width="32" height="32">
+                <img src="/static/fileicons/psd.png" alt="" width="32" height="32">
+                <img src="/static/fileicons/word.png" alt="" width="32" height="32">
+                <img src="/static/fileicons/unknown.png" alt="" width="32" height="32">
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="CardBox">
+                <img src="/static/fileicons/audio.png" alt="" width="32" height="32">
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="CardBox">
+                <img src="/static/fileicons/video.png" alt="" width="32" height="32">
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="CardBox">
+                <img src="/static/fileicons/image.png" alt="" width="32" height="32">
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="CardBox">
+                <img src="/static/fileicons/iso.png" alt="" width="32" height="32">
+            </div>
+        </div>
+
+        <div class="layui-col-md3">
+            <div class="CardBox">
+                <img src="/static/fileicons/compress.png" alt="" width="32" height="32">
+            </div>
+        </div>
+    </div>
+    <script src="https://www.layuicdn.com/layui/layui.js" charset="utf-8"></script>
+    <script>
+    function readableBytes(bytes) {
+        if (bytes == 0) {
+            return '-'
+        }
+
+        var i = Math.floor(Math.log(bytes) / Math.log(1024)),
+            sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+        return (bytes / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + sizes[i];
+    }
+
+    layui.use('table', function() {
+       
+    });
+    </script>
+</body>
+
+</html>

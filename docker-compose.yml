@@ -7,16 +7,18 @@ services:
         - MONGO_INITDB_ROOT_USERNAME=root
         - MONGO_INITDB_ROOT_PASSWORD=123456
     ports:
-      - '27017:27017'
+      - '27017:27017/tcp'
     volumes:
       - './_data/mongo:/data/db'
       - './_data/mongo-entrypoint/:/docker-entrypoint-initdb.d/'
     command: mongod
 
   filebed:
-    image: filebed:v0.1
+    image: filebed:v0.3
     container_name: filebed
+    working_dir: /var/www/src
     ports:
-      - '8100:8100'
+      - '8100:8000/tcp'
     volumes:
       - './_data/upload/:/var/www/upload'
+    command: ['python', '/var/www/main.py']

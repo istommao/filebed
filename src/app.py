@@ -9,6 +9,8 @@ import aiofiles
 from src.sanic_motor import BaseModel
 from src.models import File
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 MONGODB_URI = os.environ.get('MONGODB_HOST', 'mongodb://127.0.01:27017/filebed')
 BASE_URL = 'http://127.0.0.1:8000'
 
@@ -31,8 +33,8 @@ App.config.update(
 BaseModel.init_app(App)
 
 # 提供文件夹`static`里面的文件到URL `/static`的访问。
-App.static('/static', './static')
-App.static('/upload', './upload')
+App.static('/static', BASE_DIR + '/static')
+App.static('/upload', BASE_DIR + '/upload')
 
 BASE_UPLOAD_FOLDER = 'upload'
 
@@ -40,6 +42,16 @@ BASE_UPLOAD_FOLDER = 'upload'
 @App.route('/')
 async def index_page(request):
     return await file_stream('static/html/index.html')
+
+
+@App.route('/card_demo/')
+async def files_page(request):
+    return await file_stream('static/html/card_demo.html')
+
+
+@App.route('/cards/')
+async def files_page(request):
+    return await file_stream('static/html/cards.html')
 
 
 @App.route('/files/')

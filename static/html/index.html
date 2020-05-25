@@ -8,12 +8,19 @@
     <link rel="stylesheet" href="https://www.layuicdn.com/layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="/static/layui-theme.css" />
     <link rel="stylesheet" type="text/css" href="/static/style.css" />
+    <style>
+        #container {
+            box-shadow: 0 2px 3px 0 rgba(7, 17, 27, 0.1);
+            transition: .3s all linear;
+        }
+    </style>
 </head>
 
 <body>
     <ul class="layui-nav" lay-filter="">
         <li class="layui-nav-item layui-this"><a href="/">上传</a></li>
         <li class="layui-nav-item"><a href="/files/">文件列表</a></li>
+        <li class="layui-nav-item"><a href="/cards/">卡片列表</a></li>
         <li class="layui-nav-item"><a href="https://github.com/istommao/filebed" target="_blank">GitHub</a></li>
     </ul>
     <div id="wrapper">
