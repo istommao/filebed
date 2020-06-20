@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://www.layuicdn.com/layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="/static/layui-theme.css" />
     <link rel="stylesheet" type="text/css" href="/static/style.css" />
-
     <style type="text/css">
     td .layui-table-cell {
         height: auto;
@@ -29,8 +28,26 @@
         margin: 0;
         padding: 0;
     }
+
     .imgCell {
         max-height: 200px;
+    }
+
+    .footer {
+        width: 980px;
+        margin: 0 auto;
+        overflow: auto;
+    }
+
+    #PageBlock {
+        bottom: 0;
+        width: auto;
+        padding: 0 1em;
+        background-color: white;
+        box-shadow: 0 2px 3px 0 rgba(7, 17, 27, 0.1);
+        border: 1px solid #e4ecf3;
+        border-radius: 4px;
+        position: fixed;
     }
     </style>
 </head>
@@ -40,12 +57,15 @@
         <li class="layui-nav-item"><a href="/">上传</a></li>
         <li class="layui-nav-item layui-this"><a href="/files/">文件列表</a></li>
         <li class="layui-nav-item"><a href="/cards/">卡片列表</a></li>
-        <li class="layui-nav-item"><a href="https://github.com/istommao/filebed" target="_blank">GitHub</a></li>
     </ul>
+    <a href="https://github.com/istommao/filebed" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://imgkr.cn-bj.ufileos.com/a1a4889a-178f-423f-b19e-1310ce8ace99.png" alt="Fork me on GitHub"></a>
     <div id="wrapper">
-        <div style="margin: 2em">
+        <div style="margin: 2em;margin-bottom: 80px;">
             <table class="layui-hide" id="files"></table>
         </div>
+    </div>
+    <div class="footer">
+        <div id="PageBlock"></div>
     </div>
     <script src="https://www.layuicdn.com/layui/layui.js" charset="utf-8"></script>
     <script>
@@ -60,12 +80,46 @@
         return (bytes / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + sizes[i];
     }
 
-    layui.use('table', function() {
-        var table = layui.table;
+    var basePath = location.protocol + '//' + location.host + location.pathname;
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var category = urlParams.get('category') || '';
+
+    var page = urlParams.get('page') || '1';
+    var page_size = urlParams.get('page_size') || '20';
+
+    layui.use(['table', 'laypage'], function() {
+        var table = layui.table,
+            $ = layui.jquery,
+            laypage = layui.laypage;
+
+
+        var pageAPIURL = '/api/files/pagedata/?page_size=' + page_size + '&page=' + page
+        $.get(pageAPIURL, function(resp) {
+            var pagedata = resp.data;
+
+            //完整功能
+            laypage.render({
+                elem: 'PageBlock',
+                count: pagedata.total,
+                curr: pagedata.page,
+                limit: pagedata.page_size,
+                layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+                jump: function(obj, first) {
+                    var url = basePath + '?page_size=' + obj.limit + '&page=' + obj.curr
+                    if (!first) {
+                        window.location.href = url;
+                    }
+                }
+            });
+
+        });
+
+        var apiURL = '/api/files/?page_size=' + page_size + '&page=' + page;
 
         table.render({
             elem: '#files',
-            url: '/api/files/',
+            url: apiURL,
             cellMinWidth: 100,
             cols: [
                 [{
@@ -84,7 +138,10 @@
                     },
                     { field: 'name', width: 250, title: '名称' },
                     { field: 'type', width: 100, title: '类型' },
-                    { field: 'size', width: 150, title: '大小' ,
+                    {
+                        field: 'size',
+                        width: 150,
+                        title: '大小',
                         templet: function(d) {
                             return readableBytes(d.size || 0)
                         }

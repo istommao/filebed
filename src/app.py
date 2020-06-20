@@ -61,8 +61,12 @@ async def files_page(request):
 
 @App.route('/api/files/')
 async def files_api(request):
+    current_page = get_current_page(request.args)
+    page_size = get_page_size(request.args)
+
     qs = await File.find(
-        {}, sort='create_at desc'
+        {}, sort='create_at desc',
+        page=current_page, per_page=page_size
     )
     datalist = []
 
@@ -119,3 +123,43 @@ async def upload_api(request):
     mission_id = str(result.inserted_id)
 
     return json(True)
+
+
+
+def get_page_size(args):
+    page_size = args.get('page_size', '20')
+    try:
+        page_size = int(page_size)
+    except ValueError:
+        page_size = 20
+    return page_size
+
+
+def get_current_page(args):
+    current_page =  args.get('page', '1')
+    try:
+        current_page = int(current_page)
+    except ValueError:
+        current_page = 1
+    return current_page
+
+
+async def get_files_page_data(request):
+    current_page = get_current_page(request.args)
+    page_size = get_page_size(request.args)
+
+    total_page = await File.count({})
+    pagedata = {
+        'total': total_page,
+        'page': current_page,
+        'page_size': page_size
+    }
+
+    return pagedata
+
+
+@App.route('/api/files/pagedata/')
+async def files_pagedata_api(request):
+    pagedata = await get_files_page_data(request)
+
+    return json({'data': pagedata})

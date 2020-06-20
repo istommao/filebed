@@ -26,6 +26,7 @@
         margin: 0 auto;
         margin-top: 20px;
         overflow: auto;
+        margin-bottom: 70px;
     }
 
     .CardBox {
@@ -35,7 +36,7 @@
         border: 1px solid #e4ecf3;
         border-radius: 4px;
         background-color: #fff;
-        height: 300px;
+        height: 280px;
         float: left;
     }
 
@@ -47,7 +48,7 @@
     .CardHeader {
         padding: 0px;
         margin: 0;
-        height: 160px;
+        height: 140px;
         background: #DFE8FA;
     }
 
@@ -82,7 +83,7 @@
         color: #428CFF;
         font-size: 28px;
         text-align: center;
-        height: 160px;
+        height: 140px;
         line-height: 160px;
         overflow: hidden;
     }
@@ -90,6 +91,23 @@
     .HeaderBackground img {
         border-radius: 4px 4px 0 0;
         overflow: hidden;
+    }
+
+    .footer {
+        width: 980px;
+        margin: 0 auto;
+        overflow: auto;
+    }
+
+    #PageBlock {
+        bottom: 0;
+        width: auto;
+        padding: 0 1em;
+        background-color: white;
+        box-shadow: 0 2px 3px 0 rgba(7, 17, 27, 0.1);
+        border: 1px solid #e4ecf3;
+        border-radius: 4px;
+        position: fixed;
     }
     </style>
 </head>
@@ -99,9 +117,13 @@
         <li class="layui-nav-item"><a href="/">上传</a></li>
         <li class="layui-nav-item"><a href="/files/">文件列表</a></li>
         <li class="layui-nav-item layui-this"><a href="/cards/">卡片列表</a></li>
-        <li class="layui-nav-item"><a href="https://github.com/istommao/filebed" target="_blank">GitHub</a></li>
     </ul>
+    <a href="https://github.com/istommao/filebed" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://imgkr.cn-bj.ufileos.com/a1a4889a-178f-423f-b19e-1310ce8ace99.png" alt="Fork me on GitHub">
+    </a>
     <div id="CardListBox">
+    </div>
+    <div class="footer">
+        <div id="PageBlock"></div>
     </div>
     <script src="https://www.layuicdn.com/layui/layui.js" charset="utf-8"></script>
     <script>
@@ -118,13 +140,45 @@
 
     var FileTypeList = ['video', 'audio', 'image'];
 
-    layui.use('layer', function() {
-        var $ = layui.jquery;
+    var basePath = location.protocol + '//' + location.host + location.pathname;
 
-        $.get("/api/files/", function(resp) {
+    var urlParams = new URLSearchParams(window.location.search);
+    var category = urlParams.get('category') || '';
+
+    var page = urlParams.get('page') || '1';
+    var page_size = urlParams.get('page_size') || '20';
+
+    layui.use(['layer', 'laypage'], function() {
+        var $ = layui.jquery,
+            laypage = layui.laypage;
+
+        var apiURL = '/api/files/?page_size=' + page_size + '&page=' + page;
+        $.get(apiURL, function(resp) {
             var htmlContent = renderCardList(resp.data);
             $('#CardListBox').html(htmlContent);
         });
+
+        var pageAPIURL = '/api/files/pagedata/?page_size=' + page_size + '&page=' + page
+        $.get(pageAPIURL, function(resp) {
+            var pagedata = resp.data;
+
+            //完整功能
+            laypage.render({
+                elem: 'PageBlock',
+                count: pagedata.total,
+                curr: pagedata.page,
+                limit: pagedata.page_size,
+                layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+                jump: function(obj, first) {
+                    var url = basePath + '?page_size=' + obj.limit + '&page=' + obj.curr
+                    if (!first) {
+                        window.location.href = url;
+                    }
+                }
+            });
+
+        });
+
         $('#CardListBox').on({
             mouseenter: function() {
                 $(this).addClass('activeBox');
@@ -155,7 +209,7 @@
                     '<div class="CardHeader">' + header + '</div>' +
                     '<div class="CardBody"><h2>' + obj.name + '</h2><br>' +
                     '</div>' +
-                    '<div class="CardFooter"><img style="float: left" src="/static/fileicons/' + fileType + '.png" alt="" width="24" height="24"><div style="line-height:30px;float: left">' + readableBytes(obj.size) + '</div><a href="' + obj.url + '" target="_blank">查看</a></div>' +
+                    '<div class="CardFooter"><img style="float: left" src="/static/fileicons/' + fileType + '.png" alt="" width="24" height="24"><div style="line-height:30px;float: left;margin-left:0.3em">' + readableBytes(obj.size) + '</div><a href="' + obj.url + '" target="_blank">查看</a></div>' +
                     '</div></div>'
 
                 htmlContent += item;
