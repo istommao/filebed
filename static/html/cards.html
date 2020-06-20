@@ -8,22 +8,26 @@
     <link rel="stylesheet" href="https://www.layuicdn.com/layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="/static/layui-theme.css" />
     <link rel="stylesheet" type="text/css" href="/static/style.css" />
-
     <style type="text/css">
     div {
         padding: 0px;
         margin: 0px;
     }
-    @media screen and (min-width: 980px){
+
+    @media screen and (min-width: 980px) {
         body .CardBox {
             width: 260px;
-            margin: 20px 15px;
+            margin: 10px;
         }
     }
+
     #CardListBox {
         width: 90%;
         margin: 0 auto;
+        margin-top: 20px;
+        overflow: auto;
     }
+
     .CardBox {
         margin: 1em auto;
         box-shadow: 0 2px 3px 0 rgba(7, 17, 27, 0.1);
@@ -31,38 +35,61 @@
         border: 1px solid #e4ecf3;
         border-radius: 4px;
         background-color: #fff;
-        height: 320px;
+        height: 300px;
         float: left;
     }
+
     .activeBox {
-        box-shadow: 0 0 20px rgba(0,0,0,.15);
+        box-shadow: 0 0 20px rgba(0, 0, 0, .15);
         transition: box-shadow .3s;
     }
+
     .CardHeader {
         padding: 0px;
         margin: 0;
         height: 160px;
         background: #DFE8FA;
     }
+
     .CardBody {
         padding: 0.5em;
-        height: 100px;
+        height: 90px;
         font-size: 14px;
     }
+
     .CardBody h2 {
         overflow: hidden;
         height: 40px;
     }
+
     .CardFooter {
         height: 30px;
         width: 100%;
         padding: 0 10px;
     }
+
+    .CardFooter a {
+        float: right;
+        margin-right: 25px;
+        color: #3BA9FF;
+    }
+
+    .CardFooter a:hover {
+        color: #1F9FFF;
+    }
+
     .HeaderBackground {
         color: #428CFF;
         font-size: 28px;
         text-align: center;
+        height: 160px;
         line-height: 160px;
+        overflow: hidden;
+    }
+
+    .HeaderBackground img {
+        border-radius: 4px 4px 0 0;
+        overflow: hidden;
     }
     </style>
 </head>
@@ -74,9 +101,7 @@
         <li class="layui-nav-item layui-this"><a href="/cards/">卡片列表</a></li>
         <li class="layui-nav-item"><a href="https://github.com/istommao/filebed" target="_blank">GitHub</a></li>
     </ul>
-
     <div id="CardListBox">
-
     </div>
     <script src="https://www.layuicdn.com/layui/layui.js" charset="utf-8"></script>
     <script>
@@ -95,16 +120,16 @@
 
     layui.use('layer', function() {
         var $ = layui.jquery;
- 
+
         $.get("/api/files/", function(resp) {
             var htmlContent = renderCardList(resp.data);
             $('#CardListBox').html(htmlContent);
         });
         $('#CardListBox').on({
-            mouseenter: function () {
+            mouseenter: function() {
                 $(this).addClass('activeBox');
             },
-            mouseleave: function () {
+            mouseleave: function() {
                 $(this).removeClass('activeBox');
             }
         }, ".CardBox");
@@ -112,7 +137,7 @@
         function renderCardList(dataset) {
             var htmlContent = '';
 
-            $.each(dataset, function(key, val) {            
+            $.each(dataset, function(key, val) {
                 var obj = dataset[key];
                 fileType = obj.type;
                 if (!FileTypeList.includes(obj.type)) {
@@ -121,17 +146,16 @@
 
                 var header = '';
                 if (obj.type == 'image') {
-                    header = '<div style="background-size: coverbackground-position:center;width:100%;height:100%;background:url(' + decodeURI(obj.url) + ');"></div>'
+                    header = '<div class="HeaderBackground"><img width="100%" src="' + decodeURI(obj.url) + '"></div>'
                 } else {
                     header = '<div class="HeaderBackground">' + obj.type + '</div>'
                 }
                 var item = '<div>' +
                     '<div class="CardBox">' +
-                        '<div class="CardHeader">' + header + '</div>' +
-                        '<div class="CardBody"><h2>' + obj.name + '</h2><br>' +
-                        '<a href="' + obj.url + '" target="_blank">查看</a>' +
-                        '</div>' +
-                        '<div class="CardFooter"><img style="float: left" src="/static/fileicons/' + fileType + '.png" alt="" width="32" height="32"><div style="line-height:35px;float: left">' + readableBytes(obj.size) + '</div></div>' +
+                    '<div class="CardHeader">' + header + '</div>' +
+                    '<div class="CardBody"><h2>' + obj.name + '</h2><br>' +
+                    '</div>' +
+                    '<div class="CardFooter"><img style="float: left" src="/static/fileicons/' + fileType + '.png" alt="" width="24" height="24"><div style="line-height:30px;float: left">' + readableBytes(obj.size) + '</div><a href="' + obj.url + '" target="_blank">查看</a></div>' +
                     '</div></div>'
 
                 htmlContent += item;
